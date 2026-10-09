@@ -52,7 +52,9 @@ const projects = [
         "How it was scored",
         "Automated text checks look for those five elements, producing a score from 0 to 100. The reported average improved from 35 to 92. This measures the presence of provenance information; numerical answer correctness is evaluated separately."
       ]
-    ]
+    ],
+    "githubUrl": "https://github.com/vasishta02/ClimateGPT",
+    "githubLabel": "View repository"
   },
   {
     "id": "grid",
@@ -84,7 +86,9 @@ const projects = [
     ],
     "challenge": "Imagery and text represent different kinds of asset evidence. The project brings those inputs into a common risk-analysis workflow while keeping model explanations and delivery components inspectable.",
     "evaluation": "The project covers modeling, explanation, API delivery, and deployment configuration. This case study presents those implementation outputs; a comparative performance benchmark is not published here.",
-    "limitation": "The LangChain retrieval workflow runs locally. The Vertex AI work is job-spec scaffolding, and the deployment configuration is separate from evidence of a production rollout."
+    "limitation": "The LangChain retrieval workflow runs locally. The Vertex AI work is job-spec scaffolding, and the deployment configuration is separate from evidence of a production rollout.",
+    "githubUrl": "https://github.com/vasishta02/gridsense",
+    "githubLabel": "View repository"
   },
   {
     "id": "radar",
@@ -115,7 +119,9 @@ const projects = [
     ],
     "challenge": "Different applicant-tracking systems expose job information in different forms. The ingestion workflow brings those sources into a common prioritization process.",
     "evaluation": "The deliverable is an ingestion-to-notification workflow across four job-source platforms. Relevance scores are prioritization signals; a measured increase in interviews or offers is not reported.",
-    "limitation": "Coverage depends on source access and posting availability. A relevance score is not a hiring probability."
+    "limitation": "Coverage depends on source access and posting availability. A relevance score is not a hiring probability.",
+    "githubUrl": "https://github.com/vasishta02",
+    "githubLabel": "GitHub profile"
   },
   {
     "id": "bridges",
@@ -170,7 +176,9 @@ const projects = [
         "Clustering · 0.87 silhouette",
         "The four-cluster result is a separate unsupervised analysis. Silhouette measures how closely examples match their own cluster compared with other clusters, on a scale from −1 to 1; it is separate from classification accuracy."
       ]
-    ]
+    ],
+    "githubUrl": "https://github.com/vasishta02",
+    "githubLabel": "GitHub profile"
   },
   {
     "id": "quant",
@@ -214,7 +222,9 @@ const projects = [
     ],
     "challenge": "Market data is noisy, and selective signals can produce accuracy that is difficult to interpret without coverage. Reporting both makes the evaluation easier to assess.",
     "evaluation": "Project backtests reported SPY directional accuracy of 68–71%, QQQ accuracy of 63–66%, and approximately 30% signal coverage. A gross Sharpe ratio above 5 was observed in the backtest.",
-    "limitation": "These are historical project backtests, not live returns. The gross Sharpe figure excludes trading costs; execution costs and unseen market conditions can materially change outcomes."
+    "limitation": "These are historical project backtests, not live returns. The gross Sharpe figure excludes trading costs; execution costs and unseen market conditions can materially change outcomes.",
+    "githubUrl": "https://github.com/vasishta02/Quantitative-Asset-Forecasting",
+    "githubLabel": "View repository"
   },
   {
     "id": "urban",
@@ -245,7 +255,9 @@ const projects = [
     ],
     "challenge": "Operational signals arrive through different sensors and APIs. The workflow brings ingestion, analytical preparation, and location-based exploration into one process.",
     "evaluation": "The project deliverables span ingestion, partitioned data models, anomaly detection, and map-based visualization. A quantified operational-impact study is not published here.",
-    "limitation": "An anomaly is a signal for investigation, not a confirmed operational incident. Results depend on source coverage and data quality."
+    "limitation": "An anomaly is a signal for investigation, not a confirmed operational incident. Results depend on source coverage and data quality.",
+    "githubUrl": "https://github.com/vasishta02",
+    "githubLabel": "GitHub profile"
   },
   {
     "id": "hospital",
@@ -299,45 +311,17 @@ const projects = [
         "Evaluation setup",
         "After preprocessing, the documented pipeline used a 70% training / 15% validation / 15% test split, stratified by the 30-day readmission target, with random seed 42. Ranking and lift were evaluated on the 14,708-record test set."
       ]
-    ]
-  },
-  {
-    "id": "loan",
-    "name": "Loan Tracking System",
-    "year": "Capstone",
-    "label": "SOFTWARE ENGINEERING / JAVA",
-    "categories": [
-      "software"
     ],
-    "color": "orange",
-    "visual": "Java / JVM",
-    "sub": "A modular loan-tracking capstone",
-    "desc": "A Java capstone applying object-oriented design, validation, and business logic to loan tracking.",
-    "tags": [
-      "Java",
-      "OOP",
-      "Collections",
-      "Validation"
-    ],
-    "problem": "Loan-tracking logic benefits from clear responsibilities, consistent validation, and predictable handling of invalid inputs.",
-    "metrics": [],
-    "flow": "Inputs → validation → business logic → collections / records → tracking",
-    "contribution": "I implemented a Java/JVM loan-tracking capstone using modular classes, collections, business logic, input validation, and exception handling.",
-    "decisions": [
-      "Used object-oriented classes to separate application responsibilities.",
-      "Used collections to organize records and validation to constrain inputs.",
-      "Handled exceptions to keep invalid operations distinct from normal application flow."
-    ],
-    "challenge": "Loan-tracking rules need to behave consistently when inputs are incomplete or invalid. The capstone focused on expressing those rules clearly in a modular Java application.",
-    "evaluation": "The deliverable demonstrates loan-tracking business logic, record handling, validation, and exception handling. It is presented as an application-development capstone rather than a performance benchmark.",
-    "limitation": "The scope is modular Java application development. Distributed processing and concurrent transaction handling were outside this capstone."
+    "githubUrl": "https://github.com/vasishta02",
+    "githubLabel": "GitHub profile"
   }
 ];
 const container = document.getElementById('projects');
 const dialog = document.getElementById('case');
 const caseContent = document.getElementById('case-content');
 let caseOpener = null;
-function projectCard(p) { return `<article class="project"><div class="project-visual ${p.color}"><span class="visual-caption">${p.label}</span><div class="visual-value">${p.visual}<small>${p.sub}</small></div></div><div class="project-body"><div class="project-meta"><span>PROJECT ${String(projects.indexOf(p)+1).padStart(2,'0')}</span><span>${p.year}</span></div><h3>${p.name}</h3><p>${p.desc}</p><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div></div><button data-project="${p.id}" aria-haspopup="dialog" aria-label="Read ${p.name} case study">Read case study</button></article>`; }
+function projectLink(p) { return `<a class="project-repo" href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" aria-label="${p.githubLabel} for ${p.name} (opens in a new tab)">${p.githubLabel} <span aria-hidden="true">↗</span></a>`; }
+function projectCard(p) { return `<article class="project"><div class="project-visual ${p.color}"><span class="visual-caption">${p.label}</span><div class="visual-value">${p.visual}<small>${p.sub}</small></div></div><div class="project-body"><div class="project-meta"><span>PROJECT ${String(projects.indexOf(p)+1).padStart(2,'0')}</span><span>${p.year}</span></div><h3>${p.name}</h3><p>${p.desc}</p><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div></div><button data-project="${p.id}" aria-haspopup="dialog" aria-label="Read ${p.name} case study">Read case study</button>${projectLink(p)}</article>`; }
 const featuredIds = ['climate', 'bridges', 'grid'];
 document.getElementById('featured-projects').innerHTML = featuredIds.map(id => projectCard(projects.find(p => p.id === id))).join('');
 function render(filter = 'all') {
@@ -359,7 +343,7 @@ document.addEventListener('click', event => {
   const p = projects.find(project => project.id === button.dataset.project);
   if (!p) return;
   caseOpener = button;
-  caseContent.innerHTML = `<p class="eyebrow">${p.label} · ${p.year}</p><h2 class="case-title" id="case-title" tabindex="-1">${p.name}</h2><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>${p.metrics.length ? `<div class="case-metrics">${p.metrics.map(m=>`<div><b>${m[0]}</b><span>${m[1]}</span></div>`).join('')}</div>` : ''}<div class="case-section"><h3>The problem</h3><p>${p.problem}</p><h3>My contribution</h3><p>${p.contribution}</p><h3>Technical decisions</h3><ul>${p.decisions.map(d=>`<li>${d}</li>`).join('')}</ul><h3>The challenge</h3><p>${p.challenge}</p><h3>Workflow</h3><ol class="case-flow">${p.flow.split(' → ').map(step=>`<li>${step}</li>`).join('')}</ol><h3>Evaluation & results</h3><p>${p.evaluation}</p>${p.measurement ? `<div class="measurement"><h3>How to read the results</h3><dl>${p.measurement.map(([label, detail]) => `<div><dt>${label}</dt><dd>${detail}</dd></div>`).join('')}</dl></div>` : ''}<h3>Scope & limitations</h3><p>${p.limitation}</p></div>`;
+  caseContent.innerHTML = `<p class="eyebrow">${p.label} · ${p.year}</p><h2 class="case-title" id="case-title" tabindex="-1">${p.name}</h2><div class="case-repo">${projectLink(p)}</div><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>${p.metrics.length ? `<div class="case-metrics">${p.metrics.map(m=>`<div><b>${m[0]}</b><span>${m[1]}</span></div>`).join('')}</div>` : ''}<div class="case-section"><h3>The problem</h3><p>${p.problem}</p><h3>My contribution</h3><p>${p.contribution}</p><h3>Technical decisions</h3><ul>${p.decisions.map(d=>`<li>${d}</li>`).join('')}</ul><h3>The challenge</h3><p>${p.challenge}</p><h3>Workflow</h3><ol class="case-flow">${p.flow.split(' → ').map(step=>`<li>${step}</li>`).join('')}</ol><h3>Evaluation & results</h3><p>${p.evaluation}</p>${p.measurement ? `<div class="measurement"><h3>How to read the results</h3><dl>${p.measurement.map(([label, detail]) => `<div><dt>${label}</dt><dd>${detail}</dd></div>`).join('')}</dl></div>` : ''}<h3>Scope & limitations</h3><p>${p.limitation}</p></div>`;
   dialog.showModal();
   document.body.classList.add('case-open');
   document.getElementById('case-title').focus({preventScroll: true});

@@ -18,3 +18,6 @@
 .measurement{background:#f2f6ec;border:1px solid #d9e4cb;border-radius:14px;padding:22px;margin:28px 0}.measurement h3{margin-top:0}.measurement dl{margin-bottom:0}.measurement dl>div+div{margin-top:20px}.measurement dt{font-weight:700;font-size:15px}.measurement dd{margin:6px 0 0;font-size:15px;color:var(--muted)}
 @media(max-width:1000px){.featured-grid{grid-template-columns:minmax(0,1fr)}.featured-grid .project-visual{min-height:150px}.featured-grid .visual-value{font-size:36px}}
 @media(max-width:550px){.hero h1{font-size:39px}.featured-grid{margin-top:28px}.all-projects-heading{margin-top:38px}.measurement{padding:18px}}
+
+/* Source links on project cards and case studies. */
+.project-repo{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:14px 25px;font-size:14px;font-weight:600;border-top:1px solid var(--line);background:#f2f6ec}.project-repo:hover{background:#e8f0dc}.case-repo{margin:0 0 24px}.case-repo .project-repo{border:1px solid var(--line);border-radius:10px;width:fit-content;gap:20px}
