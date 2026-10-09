@@ -103,27 +103,29 @@ const projects = [
       "data"
     ],
     "color": "purple",
-    "visual": "0–100",
-    "sub": "Relevance scoring across job sources",
-    "desc": "A repeatable job-intelligence workflow that turns scattered postings into prioritized opportunities.",
+    "visual": "Source → decision",
+    "sub": "Ingestion, scoring, and a review dashboard",
+    "desc": "An end-to-end job-intelligence system combining multi-source ingestion, persistent state, scheduled workflows, and Gemini-assisted scoring.",
     "tags": [
       "Python",
       "SQLite",
       "GitHub Actions",
-      "Ingestion"
+      "Gemini",
+      "Dashboard"
     ],
     "problem": "Job opportunities are spread across different applicant-tracking systems, making consistent discovery and prioritization repetitive.",
     "metrics": [],
-    "flow": "Job sources → ingestion → SQLite state → relevance score → notifications",
-    "contribution": "I built Python ingestion across Workday, Greenhouse, Lever, and SmartRecruiters, added SQLite state, and implemented relevance scoring with scheduled runs and notification workflows.",
+    "flow": "Career pages / ATS boards → normalization & deduplication → SQLite → scoring → dashboard / notifications",
+    "contribution": "I built multi-source ingestion, normalization and deduplication, persistent SQLite storage, scheduled GitHub Actions workflows, and a dashboard for reviewing and tracking jobs. The scoring workflow combines structured rules with Gemini-assisted review.",
     "decisions": [
-      "Used SQLite to keep job state between runs.",
-      "Assigned a 0–100 relevance score to prioritize postings in a consistent format.",
-      "Used GitHub Actions scheduling and Slack, Discord, and email notifications to connect data collection to review."
+      "Separated source adapters from shared normalization, storage, scoring, and notification logic so integrations could evolve independently.",
+      "Kept scanned and manually entered jobs in a shared SQLite database, with persistent state to support repeat runs and deduplication.",
+      "Used scheduled workflows for collection and a dashboard for human review; relevance scores support prioritization rather than automatic application decisions.",
+      "Added HTTP retries and backoff, including handling for rate limits and Retry-After headers, plus regression tests for source and workflow behavior."
     ],
-    "challenge": "Different applicant-tracking systems expose job information in different forms. The ingestion workflow brings those sources into a common prioritization process.",
-    "evaluation": "The deliverable is an ingestion-to-notification workflow across four job-source platforms. Relevance scores are prioritization signals; a measured increase in interviews or offers is not reported.",
-    "limitation": "Coverage depends on source access and posting availability. A relevance score is not a hiring probability.",
+    "challenge": "Sources differ in schemas, availability, and rate limits. Repeated collection also creates risks around duplicate records and database consistency. The project addresses these operational concerns through shared retry logic, persistent state, board cooldowns, and regression coverage.",
+    "evaluation": "The repository includes regression tests for source adapters, board backoff, evaluation logic, notifications, dashboard snapshots, and scan routes. These provide inspectable engineering evidence alongside the ingestion-to-dashboard workflow; no measured increase in interviews or offers is claimed.",
+    "limitation": "Source coverage depends on external site availability and access. Gemini-assisted scoring can be imperfect and requires review; relevance scores are not hiring probabilities.",
     "githubUrl": "https://github.com/chandalagufus/job",
     "githubLabel": "View repository"
   },
@@ -326,7 +328,7 @@ const caseContent = document.getElementById('case-content');
 let caseOpener = null;
 function projectLink(p) { if (!p.githubUrl) return `<span class="project-repo">Private repository</span>`; return `<a class="project-repo" href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" aria-label="${p.githubLabel} for ${p.name} (opens in a new tab)">${p.githubLabel} <span aria-hidden="true">↗</span></a>`; }
 function projectCard(p) { return `<article class="project"><div class="project-visual ${p.color}"><span class="visual-caption">${p.label}</span><div class="visual-value">${p.visual}<small>${p.sub}</small></div></div><div class="project-body"><div class="project-meta"><span>PROJECT ${String(projects.indexOf(p)+1).padStart(2,'0')}</span><span>${p.year}</span></div><h3>${p.name}</h3><p>${p.desc}</p><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div></div><button data-project="${p.id}" aria-haspopup="dialog" aria-label="Read ${p.name} case study">Read case study</button>${projectLink(p)}</article>`; }
-const featuredIds = ['climate', 'bridges', 'grid'];
+const featuredIds = ['climate', 'grid', 'radar'];
 document.getElementById('featured-projects').innerHTML = featuredIds.map(id => projectCard(projects.find(p => p.id === id))).join('');
 function render(filter = 'all') {
   const selected = projects.filter(p => filter === 'all' || p.categories.includes(filter));
