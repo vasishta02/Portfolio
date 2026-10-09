@@ -1,0 +1,341 @@
+const projects = [
+  {
+    "id": "climate",
+    "name": "ClimateGPT Fusion",
+    "year": "2025",
+    "label": "APPLIED AI / CLIMATE",
+    "categories": [
+      "ai",
+      "data"
+    ],
+    "color": "",
+    "visual": "9% → 0%",
+    "sub": "Hallucinations in a 50-question evaluation",
+    "desc": "A hybrid RAG + MCP system that grounds climate analytics in structured emissions data.",
+    "tags": [
+      "RAG + MCP",
+      "DuckDB",
+      "Streamlit",
+      "Evaluation"
+    ],
+    "problem": "Climate analytics needs answers that can be checked against underlying data. This capstone focused on reducing unsupported answers while making emissions data easier to explore.",
+    "metrics": [
+      [
+        "9% → 0%",
+        "Hallucinations"
+      ],
+      [
+        "94% → 100%",
+        "Query success"
+      ],
+      [
+        "35 → 92 /100",
+        "Provenance"
+      ]
+    ],
+    "flow": "Question → entity normalization → retrieval / validated SQL → sourced response → evaluation",
+    "contribution": "My work brought together the MCP server and bridge, entity normalization, validated SQL access, the Streamlit interface, and a 50-question evaluation harness. I also worked on metadata, provenance, and bias evaluation.",
+    "decisions": [
+      "Combined retrieval with MCP access to structured data, so answers could use both context and emissions queries.",
+      "Used parameterized, SELECT-only SQL and schema validation to constrain database operations.",
+      "Kept provenance visible alongside answer quality, treating traceability as a separate evaluation target."
+    ],
+    "challenge": "Climate questions use inconsistent country and sector names. Entity normalization and fuzzy matching helped connect those questions to the EDGAR schema; query validation provided an additional check before execution.",
+    "evaluation": "Compared results on a 50-question bank: hallucinations fell from 9% to 0%, query success rose from 94% to 100%, and provenance improved from 35/100 to 92/100. Average response time was approximately 5.7 seconds, with roughly 50% less database load.",
+    "limitation": "These results describe the project evaluation bank and EDGAR v2024 coverage for 2000–2024. A 0% hallucination result on that bank does not guarantee error-free answers to unseen questions."
+  },
+  {
+    "id": "grid",
+    "name": "GridSense",
+    "year": "2026",
+    "label": "MACHINE LEARNING / INFRASTRUCTURE",
+    "categories": [
+      "ml",
+      "ai"
+    ],
+    "color": "blue",
+    "visual": "Image + text",
+    "sub": "Multimodal learning for grid asset risk",
+    "desc": "A multimodal ML project connecting asset imagery, text, and explainable risk analysis.",
+    "tags": [
+      "PyTorch",
+      "ResNet18",
+      "SHAP",
+      "FastAPI"
+    ],
+    "problem": "Asset-risk analysis can draw on multiple kinds of evidence. GridSense explores how image and text inputs can work together in a machine learning workflow.",
+    "metrics": [],
+    "flow": "Image + text → feature representations → fusion model → risk analysis → API",
+    "contribution": "My work included image, text, and fusion models, SHAP analysis, a FastAPI interface, Docker packaging, and GitHub Actions. I also developed deployment manifests and a local retrieval workflow with LangChain, FAISS, and sentence-transformers.",
+    "decisions": [
+      "Kept image, text, and fusion approaches distinct so their inputs and modeling behavior could be examined separately.",
+      "Used ResNet18 for the image branch and SHAP to support model interpretation.",
+      "Separated model serving through FastAPI from deployment configuration; included Kubernetes manifests and Vertex AI job-spec scaffolding."
+    ],
+    "challenge": "Imagery and text represent different kinds of asset evidence. The project brings those inputs into a common risk-analysis workflow while keeping model explanations and delivery components inspectable.",
+    "evaluation": "The project covers modeling, explanation, API delivery, and deployment configuration. This case study presents those implementation outputs; a comparative performance benchmark is not published here.",
+    "limitation": "The LangChain retrieval workflow runs locally. The Vertex AI work is job-spec scaffolding, and the deployment configuration is separate from evidence of a production rollout."
+  },
+  {
+    "id": "radar",
+    "name": "Job Radar",
+    "year": "2025",
+    "label": "DATA ENGINEERING / AUTOMATION",
+    "categories": [
+      "data"
+    ],
+    "color": "purple",
+    "visual": "0–100",
+    "sub": "Relevance scoring across job sources",
+    "desc": "A repeatable job-intelligence workflow that turns scattered postings into prioritized opportunities.",
+    "tags": [
+      "Python",
+      "SQLite",
+      "GitHub Actions",
+      "Ingestion"
+    ],
+    "problem": "Job opportunities are spread across different applicant-tracking systems, making consistent discovery and prioritization repetitive.",
+    "metrics": [],
+    "flow": "Job sources → ingestion → SQLite state → relevance score → notifications",
+    "contribution": "I built Python ingestion across Workday, Greenhouse, Lever, and SmartRecruiters, added SQLite state, and implemented relevance scoring with scheduled runs and notification workflows.",
+    "decisions": [
+      "Used SQLite to keep job state between runs.",
+      "Assigned a 0–100 relevance score to prioritize postings in a consistent format.",
+      "Used GitHub Actions scheduling and Slack, Discord, and email notifications to connect data collection to review."
+    ],
+    "challenge": "Different applicant-tracking systems expose job information in different forms. The ingestion workflow brings those sources into a common prioritization process.",
+    "evaluation": "The deliverable is an ingestion-to-notification workflow across four job-source platforms. Relevance scores are prioritization signals; a measured increase in interviews or offers is not reported.",
+    "limitation": "Coverage depends on source access and posting availability. A relevance score is not a hiring probability."
+  },
+  {
+    "id": "bridges",
+    "name": "Bridges at Risk",
+    "year": "2024",
+    "label": "MACHINE LEARNING / TRANSPORTATION",
+    "categories": [
+      "ml",
+      "data"
+    ],
+    "color": "orange",
+    "visual": "77.7%",
+    "sub": "Project classification accuracy",
+    "desc": "An infrastructure analytics project combining distributed data preparation with interpretable modeling.",
+    "tags": [
+      "PySpark",
+      "Databricks",
+      "XGBoost",
+      "SHAP"
+    ],
+    "problem": "Transportation infrastructure data can help organize risk patterns and support more informed analysis of bridge conditions.",
+    "metrics": [
+      [
+        "77.7%",
+        "Classification accuracy"
+      ],
+      [
+        "4",
+        "Clusters"
+      ],
+      [
+        "0.87",
+        "Silhouette score"
+      ]
+    ],
+    "flow": "Infrastructure data → distributed preparation → clustering / classification → explanation",
+    "contribution": "My work combined PySpark and Databricks data preparation, Snowflake analytics, clustering, XGBoost classification, and SHAP explanations for transportation infrastructure data.",
+    "decisions": [
+      "Used distributed preparation to structure infrastructure records for analysis.",
+      "Applied clustering to explore patterns and classification to predict the project target.",
+      "Used SHAP to connect predictions with the features influencing the model."
+    ],
+    "challenge": "Infrastructure analysis needs both useful grouping and interpretable predictions. Clustering and classification addressed those distinct questions within the same project.",
+    "evaluation": "Clustering produced four groups with a silhouette score of 0.87. The XGBoost classifier achieved 77.7% accuracy in the project evaluation, while SHAP supported interpretation of its outputs.",
+    "limitation": "Clustering quality and classification accuracy measure different aspects of the work. These project results do not establish readiness for operational bridge-safety decisions."
+  },
+  {
+    "id": "quant",
+    "name": "Quantitative Asset Forecasting",
+    "year": "2025",
+    "label": "MACHINE LEARNING / FINANCIAL DATA",
+    "categories": [
+      "ml"
+    ],
+    "color": "blue",
+    "visual": "68–71%",
+    "sub": "SPY directional accuracy in a project backtest",
+    "desc": "A time-series forecasting project comparing attention-based LSTM and ARIMA models across market assets.",
+    "tags": [
+      "LSTM",
+      "ARIMA",
+      "Time series",
+      "Feature engineering"
+    ],
+    "problem": "Financial time series are noisy. This project explored directional forecasting and the relationship between prediction accuracy and signal coverage.",
+    "metrics": [
+      [
+        "68–71%",
+        "SPY directional accuracy"
+      ],
+      [
+        "63–66%",
+        "QQQ directional accuracy"
+      ],
+      [
+        "~30%",
+        "Signal coverage"
+      ]
+    ],
+    "flow": "Historical data → 50+ features → LSTM / ARIMA → forecasts → backtest evaluation",
+    "contribution": "I developed a forecasting workflow for SPY, QQQ, GLD, and AAPL using more than 50 features, attention-based LSTM models, and ARIMA comparisons.",
+    "decisions": [
+      "Compared an attention-based LSTM approach with ARIMA rather than assessing a single model in isolation.",
+      "Tracked directional accuracy alongside signal coverage, so the results showed how often the strategy produced a signal.",
+      "Kept backtest outcomes distinct from live trading performance."
+    ],
+    "challenge": "Market data is noisy, and selective signals can produce accuracy that is difficult to interpret without coverage. Reporting both makes the evaluation easier to assess.",
+    "evaluation": "Project backtests reported SPY directional accuracy of 68–71%, QQQ accuracy of 63–66%, and approximately 30% signal coverage. A gross Sharpe ratio above 5 was observed in the backtest.",
+    "limitation": "These are historical project backtests, not live returns. The gross Sharpe figure excludes trading costs; execution costs and unseen market conditions can materially change outcomes."
+  },
+  {
+    "id": "urban",
+    "name": "Urban Intelligence",
+    "year": "Project",
+    "label": "DATA ENGINEERING / SMART CITIES",
+    "categories": [
+      "data"
+    ],
+    "color": "",
+    "visual": "City signals",
+    "sub": "From sensor data to operational insight",
+    "desc": "A smart-city analytics workflow for ingesting signals, detecting anomalies, and exploring results on maps.",
+    "tags": [
+      "Airflow",
+      "BigQuery",
+      "Anomaly detection",
+      "Maps"
+    ],
+    "problem": "City operations generate sensor and API data that needs consistent preparation before it can support useful operational analysis.",
+    "metrics": [],
+    "flow": "Sensors / APIs → Airflow ingestion → BigQuery models → anomaly detection → maps",
+    "contribution": "I worked on sensor/API ingestion, Airflow orchestration, partitioned BigQuery models, anomaly detection, and map-based views for smart-city operational analytics.",
+    "decisions": [
+      "Used Airflow to organize recurring ingestion and preparation steps.",
+      "Used partitioned BigQuery models to structure the analytical data.",
+      "Connected anomaly detection with geographic views so unusual signals could be explored in context."
+    ],
+    "challenge": "Operational signals arrive through different sensors and APIs. The workflow brings ingestion, analytical preparation, and location-based exploration into one process.",
+    "evaluation": "The project deliverables span ingestion, partitioned data models, anomaly detection, and map-based visualization. A quantified operational-impact study is not published here.",
+    "limitation": "An anomaly is a signal for investigation, not a confirmed operational incident. Results depend on source coverage and data quality."
+  },
+  {
+    "id": "hospital",
+    "name": "Hospital Readmission Prediction",
+    "year": "Project",
+    "label": "MACHINE LEARNING / HEALTHCARE DATA",
+    "categories": [
+      "ml"
+    ],
+    "color": "purple",
+    "visual": "2.24×",
+    "sub": "Lift in the project evaluation",
+    "desc": "An interpretable prediction project using healthcare data to investigate hospital readmission risk.",
+    "tags": [
+      "XGBoost",
+      "TreeSHAP",
+      "Cross-validation",
+      "Data quality"
+    ],
+    "problem": "Readmission-risk prediction requires useful features, reliable data, and explanations that help make model behavior understandable.",
+    "metrics": [
+      [
+        "101K+",
+        "Records"
+      ],
+      [
+        "2.24×",
+        "Reported model lift"
+      ]
+    ],
+    "flow": "Records → data quality / features → cross-validation → XGBoost → TreeSHAP",
+    "contribution": "I prepared and validated more than 101,000 records, engineered features, trained XGBoost with cross-validation, and used TreeSHAP to interpret the model.",
+    "decisions": [
+      "Included data-quality checks and feature engineering before modeling.",
+      "Used cross-validation to evaluate predictive behavior across data splits.",
+      "Added TreeSHAP explanations to show which features influenced model outputs."
+    ],
+    "challenge": "Readmission-risk analysis needs more than a prediction score. Data consistency and interpretable features were central to making the model’s behavior understandable.",
+    "evaluation": "The project reported 2.24× lift and used cross-validation for model evaluation. TreeSHAP provided feature-level explanations alongside the predictive results.",
+    "limitation": "This was a research and learning project, not a clinical deployment. The lift figure depends on the project’s evaluation setup and should not be interpreted as clinical effectiveness."
+  },
+  {
+    "id": "loan",
+    "name": "Loan Tracking System",
+    "year": "Capstone",
+    "label": "SOFTWARE ENGINEERING / JAVA",
+    "categories": [
+      "software"
+    ],
+    "color": "orange",
+    "visual": "Java / JVM",
+    "sub": "A modular loan-tracking capstone",
+    "desc": "A Java capstone applying object-oriented design, validation, and business logic to loan tracking.",
+    "tags": [
+      "Java",
+      "OOP",
+      "Collections",
+      "Validation"
+    ],
+    "problem": "Loan-tracking logic benefits from clear responsibilities, consistent validation, and predictable handling of invalid inputs.",
+    "metrics": [],
+    "flow": "Inputs → validation → business logic → collections / records → tracking",
+    "contribution": "I implemented a Java/JVM loan-tracking capstone using modular classes, collections, business logic, input validation, and exception handling.",
+    "decisions": [
+      "Used object-oriented classes to separate application responsibilities.",
+      "Used collections to organize records and validation to constrain inputs.",
+      "Handled exceptions to keep invalid operations distinct from normal application flow."
+    ],
+    "challenge": "Loan-tracking rules need to behave consistently when inputs are incomplete or invalid. The capstone focused on expressing those rules clearly in a modular Java application.",
+    "evaluation": "The deliverable demonstrates loan-tracking business logic, record handling, validation, and exception handling. It is presented as an application-development capstone rather than a performance benchmark.",
+    "limitation": "The scope is modular Java application development. Distributed processing and concurrent transaction handling were outside this capstone."
+  }
+];
+const container = document.getElementById('projects');
+const dialog = document.getElementById('case');
+const caseContent = document.getElementById('case-content');
+let caseOpener = null;
+function render(filter = 'all') {
+  const selected = projects.filter(p => filter === 'all' || p.categories.includes(filter));
+  container.innerHTML = selected.map(p => `<article class="project"><div class="project-visual ${p.color}"><span class="visual-caption">${p.label}</span><div class="visual-value">${p.visual}<small>${p.sub}</small></div></div><div class="project-body"><div class="project-meta"><span>PROJECT ${String(projects.indexOf(p)+1).padStart(2,'0')}</span><span>${p.year}</span></div><h3>${p.name}</h3><p>${p.desc}</p><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div></div><button data-project="${p.id}" aria-haspopup="dialog" aria-label="Read ${p.name} case study">Read case study</button></article>`).join('');
+  document.getElementById('filter-status').textContent = `Showing ${selected.length} ${selected.length === 1 ? 'project' : 'projects'}`;
+}
+document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
+  document.querySelectorAll('[data-filter]').forEach(item => {
+    item.classList.toggle('active', item === button);
+    item.setAttribute('aria-pressed', String(item === button));
+  });
+  render(button.dataset.filter);
+}));
+document.querySelector('.feature-link').setAttribute('aria-haspopup', 'dialog');
+document.addEventListener('click', event => {
+  const button = event.target.closest('[data-project]');
+  if (!button) return;
+  const p = projects.find(project => project.id === button.dataset.project);
+  if (!p) return;
+  caseOpener = button;
+  caseContent.innerHTML = `<p class="eyebrow">${p.label} · ${p.year}</p><h2 class="case-title" id="case-title" tabindex="-1">${p.name}</h2><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div>${p.metrics.length ? `<div class="case-metrics">${p.metrics.map(m=>`<div><b>${m[0]}</b><span>${m[1]}</span></div>`).join('')}</div>` : ''}<div class="case-section"><h3>The problem</h3><p>${p.problem}</p><h3>My contribution</h3><p>${p.contribution}</p><h3>Technical decisions</h3><ul>${p.decisions.map(d=>`<li>${d}</li>`).join('')}</ul><h3>The challenge</h3><p>${p.challenge}</p><h3>Workflow</h3><ol class="case-flow">${p.flow.split(' → ').map(step=>`<li>${step}</li>`).join('')}</ol><h3>Evaluation & results</h3><p>${p.evaluation}</p><h3>Scope & limitations</h3><p>${p.limitation}</p></div>`;
+  dialog.showModal();
+  document.body.classList.add('case-open');
+  document.getElementById('case-title').focus({preventScroll: true});
+  dialog.scrollTop = 0;
+});
+dialog.querySelector('.close').addEventListener('click', () => dialog.close());
+dialog.addEventListener('close', () => {
+  document.body.classList.remove('case-open');
+  if (caseOpener?.isConnected) caseOpener.focus({preventScroll: true});
+});
+dialog.addEventListener('click', event => {
+  if (event.target !== dialog) return;
+  const rect = dialog.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+});
+render();
