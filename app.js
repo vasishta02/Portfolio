@@ -10,7 +10,7 @@ const projects = [
     ],
     "color": "",
     "visual": "9% → 0%",
-    "sub": "Hallucinations in a 50-question evaluation",
+    "sub": "Hallucinations in the reported evaluation",
     "desc": "A hybrid RAG + MCP system that grounds climate analytics in structured emissions data.",
     "tags": [
       "RAG + MCP",
@@ -34,23 +34,27 @@ const projects = [
       ]
     ],
     "flow": "Question → entity normalization → retrieval / validated SQL → sourced response → evaluation",
-    "contribution": "My work brought together the MCP server and bridge, entity normalization, validated SQL access, the Streamlit interface, and a 50-question evaluation harness. I also worked on metadata, provenance, and bias evaluation.",
+    "contribution": "My work brought together the MCP server and bridge, entity normalization, validated SQL access, the Streamlit interface, and a seed-driven evaluation harness built from 50 question templates. Years, dates, and countries are randomly selected by seed to produce 50 questions per seed. I also worked on metadata, provenance, and bias evaluation.",
     "decisions": [
       "Combined retrieval with MCP access to structured data, so answers could use both context and emissions queries.",
       "Used parameterized, SELECT-only SQL and schema validation to constrain database operations.",
       "Kept provenance visible alongside answer quality, treating traceability as a separate evaluation target."
     ],
     "challenge": "Climate questions use inconsistent country and sector names. Entity normalization and fuzzy matching helped connect those questions to the EDGAR schema; query validation provided an additional check before execution.",
-    "evaluation": "Compared results on a 50-question bank: hallucinations fell from 9% to 0%, query success rose from 94% to 100%, and provenance improved from 35/100 to 92/100. Average response time was approximately 5.7 seconds, with roughly 50% less database load.",
-    "limitation": "These results describe the project evaluation bank and EDGAR v2024 coverage for 2000–2024. A 0% hallucination result on that bank does not guarantee error-free answers to unseen questions.",
+    "evaluation": "The evaluation harness generates 50 questions per seed from 50 question templates, randomly selecting years, dates, and countries. Reusing a seed reproduces the same question set; changing the seed generates another set of parameter combinations. The reported project evaluation showed hallucinations falling from 9% to 0%, query success rising from 94% to 100%, and provenance improving from 35/100 to 92/100. Average response time was approximately 5.7 seconds, with roughly 50% less database load.",
+    "limitation": "These figures describe the reported project evaluation, not guaranteed performance across every seed or parameter combination. A 0% hallucination result in evaluated runs does not guarantee error-free answers to unseen questions. The project uses EDGAR v2024 coverage for 2000–2024.",
     "measurement": [
       [
         "What 92/100 means",
-        "The average completeness of source-traceability information across a 50-question evaluation bank. Each response earns 20 points for each of five elements: data source, file ID, applied filters, contributing row count, and temporal coverage."
+        "The average completeness of source-traceability information across evaluated responses. Each response earns 20 points for each of five elements: data source, file ID, applied filters, contributing row count, and temporal coverage."
       ],
       [
         "How it was scored",
         "Automated text checks look for those five elements, producing a score from 0 to 100. The reported average improved from 35 to 92. This measures the presence of provenance information; numerical answer correctness is evaluated separately."
+      ],
+      [
+        "How the questions vary",
+        "The harness uses 50 question templates and generates 50 questions per seed. Years, dates, and countries are selected randomly using that seed, making each generated set reproducible without restricting evaluation to 50 fixed questions."
       ]
     ],
     "githubUrl": "https://github.com/vasishta02/ClimateGPT",
@@ -120,8 +124,8 @@ const projects = [
     "challenge": "Different applicant-tracking systems expose job information in different forms. The ingestion workflow brings those sources into a common prioritization process.",
     "evaluation": "The deliverable is an ingestion-to-notification workflow across four job-source platforms. Relevance scores are prioritization signals; a measured increase in interviews or offers is not reported.",
     "limitation": "Coverage depends on source access and posting availability. A relevance score is not a hiring probability.",
-    "githubUrl": "https://github.com/vasishta02",
-    "githubLabel": "GitHub profile"
+    "githubUrl": "https://github.com/chandalagufus/job",
+    "githubLabel": "View repository"
   },
   {
     "id": "bridges",
@@ -177,8 +181,8 @@ const projects = [
         "The four-cluster result is a separate unsupervised analysis. Silhouette measures how closely examples match their own cluster compared with other clusters, on a scale from −1 to 1; it is separate from classification accuracy."
       ]
     ],
-    "githubUrl": "https://github.com/vasishta02",
-    "githubLabel": "GitHub profile"
+    "githubUrl": null,
+    "githubLabel": "Private repository"
   },
   {
     "id": "quant",
@@ -256,8 +260,8 @@ const projects = [
     "challenge": "Operational signals arrive through different sensors and APIs. The workflow brings ingestion, analytical preparation, and location-based exploration into one process.",
     "evaluation": "The project deliverables span ingestion, partitioned data models, anomaly detection, and map-based visualization. A quantified operational-impact study is not published here.",
     "limitation": "An anomaly is a signal for investigation, not a confirmed operational incident. Results depend on source coverage and data quality.",
-    "githubUrl": "https://github.com/vasishta02",
-    "githubLabel": "GitHub profile"
+    "githubUrl": null,
+    "githubLabel": "Private repository"
   },
   {
     "id": "hospital",
@@ -312,15 +316,15 @@ const projects = [
         "After preprocessing, the documented pipeline used a 70% training / 15% validation / 15% test split, stratified by the 30-day readmission target, with random seed 42. Ranking and lift were evaluated on the 14,708-record test set."
       ]
     ],
-    "githubUrl": "https://github.com/vasishta02",
-    "githubLabel": "GitHub profile"
+    "githubUrl": null,
+    "githubLabel": "Private repository"
   }
 ];
 const container = document.getElementById('projects');
 const dialog = document.getElementById('case');
 const caseContent = document.getElementById('case-content');
 let caseOpener = null;
-function projectLink(p) { return `<a class="project-repo" href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" aria-label="${p.githubLabel} for ${p.name} (opens in a new tab)">${p.githubLabel} <span aria-hidden="true">↗</span></a>`; }
+function projectLink(p) { if (!p.githubUrl) return `<span class="project-repo">Private repository</span>`; return `<a class="project-repo" href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" aria-label="${p.githubLabel} for ${p.name} (opens in a new tab)">${p.githubLabel} <span aria-hidden="true">↗</span></a>`; }
 function projectCard(p) { return `<article class="project"><div class="project-visual ${p.color}"><span class="visual-caption">${p.label}</span><div class="visual-value">${p.visual}<small>${p.sub}</small></div></div><div class="project-body"><div class="project-meta"><span>PROJECT ${String(projects.indexOf(p)+1).padStart(2,'0')}</span><span>${p.year}</span></div><h3>${p.name}</h3><p>${p.desc}</p><div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join('')}</div></div><button data-project="${p.id}" aria-haspopup="dialog" aria-label="Read ${p.name} case study">Read case study</button>${projectLink(p)}</article>`; }
 const featuredIds = ['climate', 'bridges', 'grid'];
 document.getElementById('featured-projects').innerHTML = featuredIds.map(id => projectCard(projects.find(p => p.id === id))).join('');
