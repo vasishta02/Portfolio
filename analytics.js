@@ -1,7 +1,7 @@
-/* Add the portfolio web stream's public GA4 Measurement ID to activate. */
+/* Portfolio analytics: consent-based collection with browser exclusion. */
 (() => {
   'use strict';
-  const measurementId = '';
+  const measurementId = 'G-T43M4VTWME';
   const ownerKey = 'portfolio.analytics.exclude';
   const consentKey = 'portfolio.analytics.consent';
   const read = key => { try { return localStorage.getItem(key); } catch { return null; } };
